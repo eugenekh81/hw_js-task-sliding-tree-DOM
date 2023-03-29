@@ -1,16 +1,24 @@
 "use strict";
 
-const headers = document.querySelectorAll("span");
+const list = document.querySelector(".tree");
 
-let isClicked = false;
+for (const li of list.querySelectorAll("li")) {
+  const span = document.createElement("span");
 
-for (let header of headers) {
-  header.addEventListener("click", () => {
-    isClicked = !isClicked;
-    if (isClicked) {
-      header.nextElementSibling.style.display = "none";
-    } else {
-      header.nextElementSibling.style.display = "";
-    }
-  });
+  li.prepend(span);
+  span.append(span.nextSibling);
 }
+
+list.addEventListener("click", function (e) {
+  if (e.target.tagName !== "SPAN") {
+    return;
+  }
+
+  const childrenContainer = event.target.parentElement.querySelector("ul");
+
+  if (!childrenContainer) {
+    return;
+  }
+
+  childrenContainer.hidden = !childrenContainer.hidden;
+});
